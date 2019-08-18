@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'API URL',
+    baseURL: 'https://vast-shore-74260.herokuapp.com/',
 });
