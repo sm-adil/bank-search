@@ -62,9 +62,13 @@ class App extends React.Component {
   };
 
   // Changing loadFavoriteBanks to true in order to 
-  // toggle bankResult component for Favorite Banks
+  // toggle bankResult component for Favorite Banks and
+  // update the favoriteBanks state
   restoreFavoriteBanks = () => {
     this.setState({ loadFavoriteBanks: true });
+    
+    let myFavoriteBanks = localStorage.getItem('favoriteBanks') ? JSON.parse(localStorage.getItem('favoriteBanks')) : []
+    this.setState({favoriteBanks: myFavoriteBanks})
   }
 
   render() {
