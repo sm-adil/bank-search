@@ -75,19 +75,15 @@ body {
   flex-flow: wrap;
 }
 
-.page__item {
+.page__link {
+  color: #1C3144; 
+  font-size: 15px;
   cursor: pointer;
   background: #CACFD6;
   border: none;
   padding: 0.4em 0.5rem;
   margin: 1rem .25rem;
   border-radius: 3px;
-}
-
-.page__link {
-  color: #1C3144;  
-  text-decoration: none;
-  font-size: 15px;
 }
 
 table {

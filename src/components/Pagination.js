@@ -12,9 +12,9 @@ const Pagination = ({ banksPerPage, totalBanks, paginate }) => {
       <ul className='pagination'>
         {pageNumbers.map(number => (
           <li key={number} className='page__item'>
-            <a onClick={() => paginate(number)} href='!#' className='page__link'>
+            <button onClick={() => paginate(number)} className='page__link'>
               {number}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
