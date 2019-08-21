@@ -27,7 +27,7 @@ body {
 
 .search__container {
   display: grid;
-  grid-template-columns: 170px 1fr 150px;
+  grid-template-columns: 170px 70px 1fr 150px;
   grid-gap: 20px;
 }
 
@@ -43,7 +43,21 @@ body {
 }
 
 .search__box input:focus {
-  /* border: solid 2px #2684ff; */
+  box-shadow: 0 0 0 0.10rem #2684ff;
+}
+
+.page__filter input {
+  width: 100%;
+  padding: 10px 0px 10px 15px;
+  background-color: #ffffff;
+  border-color: #cccccc;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+.page__filter input:focus {
   box-shadow: 0 0 0 0.10rem #2684ff;
 }
 
@@ -174,6 +188,14 @@ table th {
   }
   .addbutton {
     padding: 1px 6px;
+  }
+}
+
+
+@media screen and (max-width: 774px) {
+  .search__container {
+    grid-template-columns: 140px 45px 1fr 120px;;
+    grid-gap: 10px;
   }
 }
 

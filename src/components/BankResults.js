@@ -5,13 +5,12 @@ class BankResults extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: 1,
-            banksPerPage: 20,
+            currentPage: 1
         }
     }
     render() {
-        const { favoriteBanks, banks, searchQuery, loading, loadFavoriteBanks } = this.props;
-        const { currentPage, banksPerPage } = this.state;
+        const { favoriteBanks, banks, searchQuery, loading, loadFavoriteBanks, banksPerPage } = this.props;
+        const { currentPage } = this.state;
  
         // Filter bankResults table depending upon the searchQuery state passed as prop
         let filteredBanks = banks.filter((bank) => {
@@ -33,9 +32,23 @@ class BankResults extends Component {
             let myFavoriteBanks = banks.filter((bank) => {
                 return bank.ifsc.indexOf(ifsc) !== -1;
             })
-            favoriteBanksArray.push(myFavoriteBanks)
-            localStorage.setItem('favoriteBanks', JSON.stringify(favoriteBanksArray))
-        }
+
+            // Check if bank details already exists in favorite bank list
+            // alert if similar bank details exists
+            // store in localstorage if bank details doesn't exists
+            let locationExist = false;
+            for (let i = 0; i < favoriteBanksArray.length; i++) 
+                if (favoriteBanksArray[i][0].ifsc === myFavoriteBanks[0].ifsc) {
+                    locationExist = true;
+                    break;
+                }
+            if(!locationExist) 
+                favoriteBanksArray.push(myFavoriteBanks);
+            else{
+                alert("location already exist in favorite bank list");
+            }
+            localStorage.setItem('favoriteBanks', JSON.stringify(favoriteBanksArray))       
+        }    
 
         if (loading) {
             return <h2 className="loading">Loading...</h2>;
@@ -106,14 +119,18 @@ class BankResults extends Component {
                                 <td data-label="District"> {bank.district}</td>
                                 <td data-label="State"> {bank.state}</td>
                                 <td data-label="Add to Favorite">
-                                    <button className="addbutton" id="add" onClick={() => addFavoriteBank(bank.ifsc)}>Add</button>
+                                    <button className="addbutton" onClick={() => addFavoriteBank(bank.ifsc)}>Add</button>
                                 </td>
                             </tr>
                             )}
                         )}
                         </tbody>
                     </table>
-                    <Pagination banksPerPage={banksPerPage} totalBanks={banks.length} paginate={paginate}/>
+                    { filteredBanks.length > 0 ? 
+                        <Pagination banksPerPage={banksPerPage} totalBanks={banks.length} paginate={paginate}/>
+                         : 
+                        <h4 className="loading">Please select a valid city or search for correct bank details.</h4>
+                    }
                 </div>
             );
         }

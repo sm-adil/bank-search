@@ -9,7 +9,7 @@ import BankResults from './components/BankResults'
 import bankApi from './api/bankApi'
 
 // Defining city options
-const options = [
+const cityOptions = [
   { value: 'MANGALORE', label: 'Mangalore' },
   { value: 'BANGALORE', label: 'Bangalore' },
   { value: 'DELHI', label: 'Delhi' },
@@ -27,7 +27,8 @@ class App extends React.Component {
       loading: false,
       searchQuery: '',
       favoriteBanks: [],
-      loadFavoriteBanks: false
+      loadFavoriteBanks: false,
+      banksPerPage: 20
     };
   }
 
@@ -61,6 +62,20 @@ class App extends React.Component {
     this.setState({ loadFavoriteBanks: false });
   };
 
+  // Select page size to display the same number of banks 
+  // Set default display size to 1 if no value or 0 is entered
+  pageFilter = (event) => {
+    let pageSize = event.target.value.replace(/\D/,'');
+
+    if (pageSize.search(/^0/) !== -1 || pageSize === '') {
+      alert("Select atleast one bank details!!"); 
+      this.setState({banksPerPage: 1})
+    }
+    else {
+      this.setState({banksPerPage: pageSize})
+    }
+  }
+
   // Changing loadFavoriteBanks to true in order to 
   // toggle bankResult component for Favorite Banks and
   // update the favoriteBanks state
@@ -72,7 +87,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { selectedCity, banks, searchQuery, favoriteBanks, loading, loadFavoriteBanks } = this.state;
+    const { selectedCity, banks, searchQuery, favoriteBanks, loading, loadFavoriteBanks, banksPerPage } = this.state;
     
     return (
       <div className="App">
@@ -83,9 +98,13 @@ class App extends React.Component {
               <Select
                 value={selectedCity}
                 onChange={this.handleChange}
-                options={options}
+                options={cityOptions}
                 placeholder='Select a City'
               />
+            </div>
+
+            <div className="page__filter">
+              <input type="tel" value={banksPerPage} onChange={this.pageFilter} />
             </div>
             
             <SearchBar textChange={this.handleSearchChange} />
@@ -102,7 +121,8 @@ class App extends React.Component {
             banks={banks} 
             searchQuery={searchQuery} 
             loading={loading} 
-            loadFavoriteBanks={loadFavoriteBanks}/>
+            loadFavoriteBanks={loadFavoriteBanks}
+            banksPerPage={banksPerPage}/>
         </div>
       </div>
     );
